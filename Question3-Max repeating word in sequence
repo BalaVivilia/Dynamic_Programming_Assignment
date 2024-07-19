@@ -1,0 +1,36 @@
+Question:
+---------
+
+ For a string sequence, a string word is k-repeating if word concatenated k times is a substring of
+ sequence. The word's maximum k-repeating value is the highest value k where word is k-repeating
+ in sequence. If word is not a substring of sequence, word's maximum k-repeating value is 0.
+ Given strings sequence and word, return the maximum k-repeating value of word in sequence.
+ Input Description:
+ Two strings `sequence` and `word`.
+ Output Description:
+ The maximum k-repeating value of `word` in `sequence`
+
+
+Input: ababc
+Output: 2 
+Explaination: ab ab occurs 2 times in the given sequence.
+
+____________________________________________________________________________________________________________________________________________________________________________
+
+Program:
+--------
+
+def maxRepeatingWordInSequence(sequence,word):
+    maxK=0;
+    k=1 
+    while word*k in sequence:
+        maxK=k 
+        k=k+1 
+    return maxK
+
+sequence=input()
+word=input()
+print(maxRepeatingWordInSequence(sequence,word))
+
+
+_____________________________________________________________________________________________________________________________________________________________________________
