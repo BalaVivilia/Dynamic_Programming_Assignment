@@ -1,0 +1,215 @@
+Question 1:       Coins Change
+-----------      -------------
+
+You are given an integer array coins representing coins of different denominations and an integer
+ amount representing a total amount of money.
+ Return the fewest number of coins that you need to make up that amount. If that amount of money
+ cannot be made up by any combination of the coins, return -1.
+ You may assume that you have an infinite number of each kind of coin.
+
+ Input Description:
+ An integer array `coins` representing coins of different denominations.
+ An integer `amount` representing a total amount of money.
+
+ Output Description:
+ The fewest number of coins needed to make up the amount. If the amount cannot be made up,
+ return -1
+
+coin[1,2,5]
+amount=11
+output=3 
+
+_______________________________________________________________________________________________________________________________________________________
+
+Program:
+-------
+
+def coinProgram(coins,amount):
+    dp=[amount+1]*(amount+1)
+    dp[0]=0;
+    for i in range(1,amount+1):
+        for coin in coins:
+            if i-coin>=0:
+                dp[i]=min(dp[i],dp[i-coin]+1)
+    if(dp[amount]!=amount+1):
+        return dp[amount]
+    else:
+        return -1
+   
+coins=list(map(int,input().split()))
+amount=int(input())
+print(coinProgram(coins,amount))
+
+
+_______________________________________________________________________________________________________________________________________________________________
+
+
+Question 2:      Longest Palindrome
+----------       ------------------
+
+ Given a string `s`, return the longest palindromic substring in `s`.
+ Input Description:
+ A string `s`.
+ Output Description:
+ The longest palindromic substring in `s`
+
+input: babad
+
+output: aba or bab
+
+
+Program:
+-------
+
+def longestPalindrome(s):
+    n=len(s)
+    if(n==0):
+        return ""
+    
+    dp=[[False]*n for _ in range(n)]
+    start=0
+    maxLength=1 
+    
+    for i in range(n):
+        dp[i][i]=True
+    
+    for i in range(n-1):
+        if(s[i]==s[i+1]):
+            dp[i][i+1]=True
+            start=i
+            maxLength=2
+            
+    for length in range(3,n+1):
+        for i in range(n-length+1):
+            j=i+length-1
+            if s[i]==s[j] and dp[i+1][j-1]:
+                dp[i][j]=True
+                if length>maxLength:
+                    start=i
+                    maxLength=length
+                    
+    return s[start:start+maxLength]
+  
+
+s=input()
+print(longestPalindrome(s))
+
+
+________________________________________________________________________________________________________________________________________________________________________
+
+
+Question 3:         Maximum Repeating Word in Sequence
+-----------        ------------------------------------
+
+For a string sequence, a string word is k-repeating if word concatenated k times is a substring of
+ sequence. The word's maximum k-repeating value is the highest value k where word is k-repeating
+ in sequence. If word is not a substring of sequence, word's maximum k-repeating value is 0.
+ Given strings sequence and word, return the maximum k-repeating value of word in sequence.
+ Input Description:
+ Two strings `sequence` and `word`.
+ Output Description:
+ The maximum k-repeating value of `word` in `sequence`
+
+
+Input: ababc
+Output: 2 
+Explaination: ab ab occurs 2 times in the given sequence.
+
+
+Program:
+--------
+
+def maxRepeatingWordInSequence(sequence,word):
+    maxK=0;
+    k=1 
+    while word*k in sequence:
+        maxK=k 
+        k=k+1 
+    return maxK
+
+sequence=input()
+word=input()
+print(maxRepeatingWordInSequence(sequence,word))
+
+
+_____________________________________________________________________________________________________________________________________________________________________________
+
+
+Question 4:        Maximum SubArray sum
+----------        ----------------------
+
+Given an integer array `nums`, find the subarray with the largest sum, and return its sum.
+
+ Input Description:
+ An integer array `nums`.
+
+ Output Description:
+ The sum of the subarray with the largest sum.
+
+Example:
+Input: arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Output: 6 
+Explanation: The subarray [4, -1, 2, 1] has the largest sum 6.
+
+
+
+Program:
+-------
+
+def maxSubArraySum(arr):
+    
+    currentSum=maxSum=arr[0]
+    
+    for num in arr[1:]:
+        currentSum=max(num,currentSum+num)
+        maxSum=max(maxSum,currentSum)
+    
+    return maxSum
+
+arr=list(map(int,input().split()))
+print(maxSubArraySum(arr))
+
+
+_____________________________________________________________________________________________________________________________________________________________________________
+
+
+Question 5:         Climb Stairs
+-----------         -------------
+
+
+You are climbing a staircase. It takes `n` steps to reach the top.
+ Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+ Input Description:
+ An integer `n`.
+
+ Output Description:
+The number of distinct ways to climb to the top.
+
+Input: 3
+Output: 3
+Explanation: (1+1+1) (2+1) (1+2) 3 ways to climb.
+
+
+
+Program:
+--------
+
+def climbStairs(n):
+    if n==1:
+        return 1
+        
+    dp=[0]*(n+1) 
+    dp[1]=1 
+    dp[2]=2 
+     
+    for i in range(3,n+1):
+        dp[i]=dp[i-1]+dp[i-2]
+        
+    return dp[n]
+    
+n=int(input())
+print(climbStairs(n))
+
+
+____________________________________________________________________________________________________________________________________________________________________________
