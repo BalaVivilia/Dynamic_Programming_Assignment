@@ -17,13 +17,40 @@ Evaluate the value of an arithmetic expression in Reverse Polish Notation (RPN).
 Program:
 --------
 
+def ReversePolishNotation(tokens):
+    stack=[]
+    
+    for token in tokens:
+        
+        if token in "+-*/":
+            b=stack.pop()
+            a=stack.pop()
+            
+            if token=='+':
+                result=a+b
+
+            elif token=='-':
+                result=a-b
+
+            elif token=='*':
+                result=a*b 
+
+            elif token=='/':
+                result=int(a/b)
+
+            stack.append(result)
+            
+        else:
+            stack.append(int(token))
+            
+    return stack[0]
+    
+s=list(input().split())
+print(ReversePolishNotation(s))
 
 
 
-
-
-
-_____________________________________________________________________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________________
 
 
 Question 2:              Min Stack
@@ -56,6 +83,50 @@ Example 1:
 Program:
 --------
 
+import java.util.Stack;
+
+class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int val) {
+        stack.push(val);
+        if (minStack.isEmpty() || val<=minStack.peek()) {
+            minStack.push(val);
+        }
+    }
+
+    public void pop() {
+        if (stack.peek().equals(minStack.peek())) {
+            minStack.pop();
+        }
+        stack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+
+    public static void main(String[] args) {
+        MinStack minStack = new MinStack();
+        minStack.push(-2);
+        minStack.push(0);
+        minStack.push(-3);
+        System.out.println(minStack.getMin()); 
+        minStack.pop();
+        System.out.println(minStack.top());    
+        System.out.println(minStack.getMin()); 
+    }
+}
 
 
 
@@ -82,7 +153,21 @@ Output:- Return an array of integers, where the ith element is the number of day
 Program:
 --------
 
-
+def dailyTemperatures(T):
+    n = len(T)
+    result = [0]*n
+    stack = []
+    
+    for i in range(n):
+        while stack and T[i]>T[stack[-1]]:
+            idx=stack.pop()
+            result[idx] = i - idx
+        stack.append(i)
+    
+    return result
+    
+t=list(input().split())
+print(dailyTemperatures(t))
 
 
 _____________________________________________________________________________________________________________________________________________________________________________
